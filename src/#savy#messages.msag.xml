@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_MSAG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <T100A>
+    <ARBGB>/SAVY/MESSAGES</ARBGB>
+    <MASTERLANG>E</MASTERLANG>
+    <STEXT>Saviynt Messages</STEXT>
+   </T100A>
+   <T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>000</MSGNR>
+     <TEXT>&amp; &amp; &amp; &amp;</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>001</MSGNR>
+     <TEXT>Applog Class Instance Created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>Applog Class Instance Failed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Message Container Instance Created</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Message Container Instance Failed &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>User creation process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Read Entry Data Error</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Version &amp;1 Maintained</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>User name is empty</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>009</MSGNR>
+     <TEXT>User name &amp;1 already exists</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>User &amp;1 Validated Successfully</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>011</MSGNR>
+     <TEXT>Database error checking user &amp;1 : &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>012</MSGNR>
+     <TEXT>Reference User &amp;1 - retrieving parameters via SUSR_USER_PARAMETERS_GET</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>013</MSGNR>
+     <TEXT>Reference User &amp;1 - &amp;2 are parameters retrieved</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>014</MSGNR>
+     <TEXT>Reference User &amp;1 - does not exist or error retrieving parameters</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>015</MSGNR>
+     <TEXT>Calling BAPI_USER_CREATE1 for user &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>016</MSGNR>
+     <TEXT>BAPI Returned &amp;1 &amp;2 &amp;3 &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>017</MSGNR>
+     <TEXT>BAPI_USER_CREATE1 failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>018</MSGNR>
+     <TEXT>Successfully created user &amp;1 - Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>019</MSGNR>
+     <TEXT>Commit failed for user &amp;1 : &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>020</MSGNR>
+     <TEXT>User role assign process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>021</MSGNR>
+     <TEXT>User &amp;1 does not exist or is locked</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>022</MSGNR>
+     <TEXT>No roles assigned for this user: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>023</MSGNR>
+     <TEXT>Sending roles are not valid &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>024</MSGNR>
+     <TEXT>Role &amp;1 does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>025</MSGNR>
+     <TEXT>Role &amp;1 has future start date - &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>026</MSGNR>
+     <TEXT>Role &amp;1 has invalid date range</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>027</MSGNR>
+     <TEXT>Merged &amp;1 existing roles with &amp;2 new roles for user &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>028</MSGNR>
+     <TEXT>Calling BAPI_USER_ACTGROUPS_ASSIGN for user &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>029</MSGNR>
+     <TEXT>BAPI exception for user &amp;1 : &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>030</MSGNR>
+     <TEXT>BAPI_USER_ACTGROUPS_ASSIGN failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>031</MSGNR>
+     <TEXT>Successfully assigned &amp;1 roles to user &amp;2 Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>032</MSGNR>
+     <TEXT>User role unassign process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>033</MSGNR>
+     <TEXT>Successfully unassigned &amp;1 roles to user &amp;2 Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>034</MSGNR>
+     <TEXT>User Delete process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>035</MSGNR>
+     <TEXT>Calling BAPI_USER_DELETE for user deleted &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>036</MSGNR>
+     <TEXT>BAPI_USER_DELETE failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>037</MSGNR>
+     <TEXT>Successfully deleted user &amp;1 - Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>038</MSGNR>
+     <TEXT>User Lock process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>039</MSGNR>
+     <TEXT>Calling BAPI_USER_LOCK for user lock &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>040</MSGNR>
+     <TEXT>BAPI_USER_LOCK failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>041</MSGNR>
+     <TEXT>Successfully locked user &amp;1 - Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>042</MSGNR>
+     <TEXT>User Unlock process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>043</MSGNR>
+     <TEXT>Calling BAPI_USER_UNLOCK for user unlock &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>044</MSGNR>
+     <TEXT>BAPI_USER_UNLOCK failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>045</MSGNR>
+     <TEXT>Successfully unlocked user &amp;1 - Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>046</MSGNR>
+     <TEXT>User new password process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>047</MSGNR>
+     <TEXT>Calling BAPI_USER_CHANGE for user unlock &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>048</MSGNR>
+     <TEXT>User Password failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>049</MSGNR>
+     <TEXT>Successfully user password &amp;1 - Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>050</MSGNR>
+     <TEXT>You do not have authorization to create user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>051</MSGNR>
+     <TEXT>You do not have authorization to delete user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>052</MSGNR>
+     <TEXT>You do not have authorization to lock user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>053</MSGNR>
+     <TEXT>You do not have authorization to reset password</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>054</MSGNR>
+     <TEXT>You do not have authorization to role assign</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>055</MSGNR>
+     <TEXT>You do not have authorization to role unassign</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>056</MSGNR>
+     <TEXT>You do not have authorization to unlock user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>057</MSGNR>
+     <TEXT>User Profile Assign process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>058</MSGNR>
+     <TEXT>You do not have authorization to profile assign</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>059</MSGNR>
+     <TEXT>No profiles assigned for this user: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>060</MSGNR>
+     <TEXT>Sending profiles are not valid &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>061</MSGNR>
+     <TEXT>Profile &amp;1 does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>062</MSGNR>
+     <TEXT>Calling BAPI_USER_PROFILES_ASSIGN for user &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>063</MSGNR>
+     <TEXT>BAPI_USER_PROFILES_ASSIGN failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>064</MSGNR>
+     <TEXT>Successfully assigned &amp;1 profiles to user &amp;2 Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>065</MSGNR>
+     <TEXT>You do not have authorization to profile unassign</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>066</MSGNR>
+     <TEXT>User profile unassign process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>067</MSGNR>
+     <TEXT>Successfully unassigned &amp;1 profiles to user &amp;2 Committed</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>068</MSGNR>
+     <TEXT>Profile &amp;1 already assigned</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>069</MSGNR>
+     <TEXT>No such profile &amp;1 assigned to this user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>070</MSGNR>
+     <TEXT>Sending profiles are not assigned this user &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>071</MSGNR>
+     <TEXT>You do not have authorization to change user</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>072</MSGNR>
+     <TEXT>User changing process Begin: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>073</MSGNR>
+     <TEXT>User name &amp;1 does not exist</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>074</MSGNR>
+     <TEXT>Calling BAPI_USER_CHANGE for user &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>075</MSGNR>
+     <TEXT>BAPI_USER_CHANGE failed for user &amp;1 - rolled back</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>076</MSGNR>
+     <TEXT>Successfully changed user &amp;1 - Committed</TEXT>
+    </T100>
+   </T100>
+  </asx:values>
+ </asx:abap>
+</abapGit>

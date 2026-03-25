@@ -1,0 +1,17 @@
+@EndUserText.label: 'Service Definition for User Get Delta'
+define service /SAVY/SD_USER_GET_DELTA {
+  expose /SAVY/I_USER_GET_DELTA;
+  expose /SAVY/I_USER_CHANGE_AUDITITEM;
+  expose /SAVY/I_USER_ADDRESS_DELTA;
+  expose /SAVY/I_USER_DEFAULTS_DELTA;
+  expose /SAVY/I_USER_SNC_DELTA;
+  expose /SAVY/I_USER_REFERENCE_DELTA;
+  expose /SAVY/I_USER_GROUP_DELTA;
+  expose /SAVY/I_USER_LOGON_DELTA;
+  expose /SAVY/I_USER_ADMINDATA_DELTA;
+  expose /SAVY/I_USER_UCLASSSYS_DELTA;
+  expose /SAVY/I_USER_COMPANY_DELTA;
+  expose /SAVY/I_USER_PROFILES_DELTA;
+  expose /SAVY/I_USER_ROLES_DELTA;
+  expose /SAVY/I_USER_PARAMETERS_DELTA;
+}

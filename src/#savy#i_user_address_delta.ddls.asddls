@@ -1,0 +1,31 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'User Address Delta'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+    }
+define view entity /SAVY/I_USER_ADDRESS_DELTA  as select from usr21 as a
+   inner join       adrp on a.persnumber = adrp.persnumber
+   left outer join  adrc on a.addrnumber = adrc.addrnumber
+  association to parent /SAVY/I_USER_GET_DELTA as _UserDelta
+   on $projection.Username =  _UserDelta.Username
+{
+        key a.bname  as  Username,
+        adrp.persnumber as PersonalNumber,
+        adrc.addrnumber as AddressNumber,
+        adrp.title      as Title,
+        adrp.name_first as FirstName,
+        adrp.name_last  as LastName,
+        adrp.name_text  as FullName,
+        adrc.nation     as Nation,
+        adrc.name1      as Name1,
+        adrc.name2      as Name2,
+        adrc.country    as Country,
+        adrc.langu      as Langu,
+        adrc.region     as Region,
+        
+        _UserDelta
+}

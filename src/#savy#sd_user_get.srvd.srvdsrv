@@ -1,0 +1,17 @@
+@EndUserText.label: 'Service Definition for User Get'
+define service /SAVY/SD_USER_GET {
+  expose /SAVY/I_USER_GET;
+  expose /SAVY/I_USER_ADDRESS;
+  expose /SAVY/I_USER_DEFAULTS;
+  expose /SAVY/I_USER_SNC;
+  expose /SAVY/I_USER_REFERENCE;
+  expose /SAVY/I_USER_GROUPS;
+  expose /SAVY/I_USER_LOGON;
+  expose /SAVY/I_USER_ADMINDATA;
+  expose /SAVY/I_USER_UCLASSYS;
+  expose /SAVY/I_USER_COMPANY;
+  expose /SAVY/I_USER_PROFILES;
+  expose /SAVY/I_USER_ACTROLES;
+  expose /SAVY/I_USER_PARAMETERS;
+  expose /SAVY/I_USER_CHANGE_LOG;
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition for Role Tcode'
+define service /SAVY/SD_ROLE_GET {
+  expose /SAVY/I_ROLE_GET;
+  expose /SAVY/I_ROLE_TCODE;
+  expose /SAVY/I_ROLE_TEXT;
+}

@@ -1,0 +1,11 @@
+@EndUserText.label: 'Saviynt User Management'
+@MappingRole: true
+define role /SAVY/USER_ACCESS {
+    grant 
+        select
+            on
+                /SAVY/I_USER_GET_DELTA
+                    where
+                        (Username) = aspect pfcg_auth(/SAVY/USER, /SAVY/USER, ACTVT = '03');
+                        
+}
