@@ -430,7 +430,7 @@ CLASS /SAVY/CL_USER_PROFI_01_DPC_EXT IMPLEMENTATION.
           CLEAR ls_mesg.
           ls_mesg-msgty = 'I'.
           ls_mesg-msgid = '/SAVY/MESSAGES'.
-          ls_mesg-msgno = '027'.
+          ls_mesg-msgno = '077'.
           ls_mesg-msgv1 = lines( lt_uprofiles ).
           ls_mesg-msgv2 = lines( ls_deep-userprofilesset ).
           ls_mesg-msgv3 = lv_username.

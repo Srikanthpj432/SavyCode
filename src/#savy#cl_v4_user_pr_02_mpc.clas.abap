@@ -1,4 +1,4 @@
-class /SAVY/CL_V4_USER_PROFI_MPC definition
+class /SAVY/CL_V4_USER_PR_02_MPC definition
   public
   inheriting from /IWBEP/CL_V4_ABS_MODEL_PROV
   create public .
@@ -6,19 +6,19 @@ class /SAVY/CL_V4_USER_PROFI_MPC definition
 public section.
 
   types:
-     begin of TS_USERASSIGN,
-         STATUS type C length 200,
-         VERSION type C length 10,
-         USERNAME type C length 12,
-     end of TS_USERASSIGN .
-  types:
-     TT_USERASSIGN type standard table of TS_USERASSIGN .
-  types:
      begin of TS_USERPROFILES,
          BAPIPROF type C length 12,
      end of TS_USERPROFILES .
   types:
      TT_USERPROFILES type standard table of TS_USERPROFILES .
+  types:
+     begin of TS_USERUNASSIGN,
+         STATUS type C length 200,
+         VERSION type C length 10,
+         USERNAME type C length 12,
+     end of TS_USERUNASSIGN .
+  types:
+     TT_USERUNASSIGN type standard table of TS_USERUNASSIGN .
 
   methods /IWBEP/IF_V4_MP_BASIC~DEFINE
     redefinition .
@@ -30,7 +30,7 @@ private section.
       !IO_MODEL type ref to /IWBEP/IF_V4_MED_MODEL
     raising
       /IWBEP/CX_GATEWAY .
-  methods DEFINE_USERASSIGN
+  methods DEFINE_USERUNASSIGN
     importing
       !IO_MODEL type ref to /IWBEP/IF_V4_MED_MODEL
     raising
@@ -39,29 +39,66 @@ ENDCLASS.
 
 
 
-CLASS /SAVY/CL_V4_USER_PROFI_MPC IMPLEMENTATION.
+CLASS /SAVY/CL_V4_USER_PR_02_MPC IMPLEMENTATION.
 
 
   method /IWBEP/IF_V4_MP_BASIC~DEFINE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 01.04.2026 12:11:57 in client 100
+*&* This class has been generated on 01.04.2026 12:27:16 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
-*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PROFI_MPC_EXT
+*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PR_02_MPC_EXT
 *&-----------------------------------------------------------------------------------------------*
-  define_userassign( io_model ).
   define_userprofiles( io_model ).
+  define_userunassign( io_model ).
   endmethod.
 
 
-  method DEFINE_USERASSIGN.
+  method DEFINE_USERPROFILES.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 01.04.2026 12:11:57 in client 100
+*&* This class has been generated on 01.04.2026 12:27:16 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
-*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PROFI_MPC_EXT
+*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PR_02_MPC_EXT
+*&-----------------------------------------------------------------------------------------------*
+
+ DATA lo_entity_type    TYPE REF TO /iwbep/if_v4_med_entity_type.
+ DATA lo_property       TYPE REF TO /iwbep/if_v4_med_prim_prop.
+ DATA lo_entity_set     TYPE REF TO /iwbep/if_v4_med_entity_set.
+***********************************************************************************************************************************
+*   ENTITY - Userprofiles
+***********************************************************************************************************************************
+ lo_entity_type = io_model->create_entity_type( iv_entity_type_name = 'USERPROFILES' ). "#EC NOTEXT
+
+ lo_entity_type->set_edm_name( 'Userprofiles' ).            "#EC NOTEXT
+
+***********************************************************************************************************************************
+*   Properties
+***********************************************************************************************************************************
+ lo_property = lo_entity_type->create_prim_property( iv_property_name = 'BAPIPROF' ). "#EC NOTEXT
+ lo_property->set_edm_name( 'Bapiprof' ).                   "#EC NOTEXT
+ lo_property->set_edm_type( iv_edm_type = 'String' ).       "#EC NOTEXT
+ lo_property->set_is_key( ).
+ lo_property->set_max_length( iv_max_length = '12' ).       "#EC NOTEXT
+
+
+***********************************************************************************************************************************
+*   ENTITY SETS
+***********************************************************************************************************************************
+ lo_entity_set = lo_entity_type->create_entity_set( 'USERPROFILESSET' ). "#EC NOTEXT
+ lo_entity_set->set_edm_name( 'UserprofilesSet' ).          "#EC NOTEXT
+  endmethod.
+
+
+  method DEFINE_USERUNASSIGN.
+*&----------------------------------------------------------------------------------------------*
+*&* This class has been generated on 01.04.2026 12:27:16 in client 100
+*&*
+*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
+*&*   If you want to change the MPC implementation, use the
+*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PR_02_MPC_EXT
 *&-----------------------------------------------------------------------------------------------*
 
  DATA lo_entity_type    TYPE REF TO /iwbep/if_v4_med_entity_type.
@@ -69,11 +106,11 @@ CLASS /SAVY/CL_V4_USER_PROFI_MPC IMPLEMENTATION.
  DATA lo_entity_set     TYPE REF TO /iwbep/if_v4_med_entity_set.
  DATA lo_nav_prop       TYPE REF TO /iwbep/if_v4_med_nav_prop.
 ***********************************************************************************************************************************
-*   ENTITY - Userassign
+*   ENTITY - Userunassign
 ***********************************************************************************************************************************
- lo_entity_type = io_model->create_entity_type( iv_entity_type_name = 'USERASSIGN' ). "#EC NOTEXT
+ lo_entity_type = io_model->create_entity_type( iv_entity_type_name = 'USERUNASSIGN' ). "#EC NOTEXT
 
- lo_entity_type->set_edm_name( 'Userassign' ).              "#EC NOTEXT
+ lo_entity_type->set_edm_name( 'Userunassign' ).            "#EC NOTEXT
 
 ***********************************************************************************************************************************
 *   Properties
@@ -108,47 +145,10 @@ CLASS /SAVY/CL_V4_USER_PROFI_MPC IMPLEMENTATION.
 ***********************************************************************************************************************************
 *   ENTITY SETS
 ***********************************************************************************************************************************
- lo_entity_set = lo_entity_type->create_entity_set( 'USERASSIGNSET' ). "#EC NOTEXT
- lo_entity_set->set_edm_name( 'UserassignSet' ).            "#EC NOTEXT
+ lo_entity_set = lo_entity_type->create_entity_set( 'USERUNASSIGNSET' ). "#EC NOTEXT
+ lo_entity_set->set_edm_name( 'UserunassignSet' ).          "#EC NOTEXT
 
  lo_entity_set->add_navigation_prop_binding( iv_navigation_property_path = 'USERPROFILESSET'
                                                               iv_target_entity_set = 'USERPROFILESSET' ). "#EC NOTEXT
-  endmethod.
-
-
-  method DEFINE_USERPROFILES.
-*&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 01.04.2026 12:11:57 in client 100
-*&*
-*&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
-*&*   If you want to change the MPC implementation, use the
-*&*   generated methods inside MPC subclass - /SAVY/CL_V4_USER_PROFI_MPC_EXT
-*&-----------------------------------------------------------------------------------------------*
-
- DATA lo_entity_type    TYPE REF TO /iwbep/if_v4_med_entity_type.
- DATA lo_property       TYPE REF TO /iwbep/if_v4_med_prim_prop.
- DATA lo_entity_set     TYPE REF TO /iwbep/if_v4_med_entity_set.
-***********************************************************************************************************************************
-*   ENTITY - Userprofiles
-***********************************************************************************************************************************
- lo_entity_type = io_model->create_entity_type( iv_entity_type_name = 'USERPROFILES' ). "#EC NOTEXT
-
- lo_entity_type->set_edm_name( 'Userprofiles' ).            "#EC NOTEXT
-
-***********************************************************************************************************************************
-*   Properties
-***********************************************************************************************************************************
- lo_property = lo_entity_type->create_prim_property( iv_property_name = 'BAPIPROF' ). "#EC NOTEXT
- lo_property->set_edm_name( 'Bapiprof' ).                   "#EC NOTEXT
- lo_property->set_edm_type( iv_edm_type = 'String' ).       "#EC NOTEXT
- lo_property->set_is_key( ).
- lo_property->set_max_length( iv_max_length = '12' ).       "#EC NOTEXT
-
-
-***********************************************************************************************************************************
-*   ENTITY SETS
-***********************************************************************************************************************************
- lo_entity_set = lo_entity_type->create_entity_set( 'USERPROFILESSET' ). "#EC NOTEXT
- lo_entity_set->set_edm_name( 'UserprofilesSet' ).          "#EC NOTEXT
   endmethod.
 ENDCLASS.

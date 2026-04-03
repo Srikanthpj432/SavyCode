@@ -33,7 +33,7 @@ CLASS /SAVY/CL_V4_USER_UNLOC_MPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_MP_BASIC~DEFINE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:56:28 in client 100
+*&* This class has been generated on 02.04.2026 11:50:54 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -45,7 +45,7 @@ CLASS /SAVY/CL_V4_USER_UNLOC_MPC IMPLEMENTATION.
 
   method DEFINE_STATUSRESULT.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:56:28 in client 100
+*&* This class has been generated on 02.04.2026 11:50:54 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the

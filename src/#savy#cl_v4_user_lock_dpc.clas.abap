@@ -57,7 +57,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~CREATE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated  on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -88,7 +88,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~DELETE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated  on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -119,7 +119,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~READ_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated  on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -152,7 +152,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~READ_ENTITY_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -183,7 +183,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~UPDATE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated  on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -214,7 +214,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_CREATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -237,7 +237,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_DELETE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -260,7 +260,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_READ.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -283,7 +283,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_READ_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -306,7 +306,7 @@ CLASS /SAVY/CL_V4_USER_LOCK_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_UPDATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 24.03.2026 16:58:34 in client 100
+*&* This class has been generated on 02.04.2026 11:18:15 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the

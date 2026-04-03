@@ -470,6 +470,12 @@
      <MSGNR>076</MSGNR>
      <TEXT>Successfully changed user &amp;1 - Committed</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>077</MSGNR>
+     <TEXT>Merged &amp;1 existing profiles with &amp;2 new profiles for user &amp;3</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

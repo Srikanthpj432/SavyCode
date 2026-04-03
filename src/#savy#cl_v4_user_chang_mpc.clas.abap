@@ -60,7 +60,7 @@ public section.
          COMPANYX type TS_COMPANYX,
          DEFAULTS type TS_DEFAULTS,
          VERSION type C length 10,
-         USERNAME type STRING,
+         USERNAME type C length 12,
      end of TS_USERCHANGE .
   types:
      TT_USERCHANGE type standard table of TS_USERCHANGE .
@@ -104,7 +104,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_MP_BASIC~DEFINE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -120,7 +120,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method DEFINE_COMPLEXTYPES.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -2111,7 +2111,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method DEFINE_GROUPS.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -2151,7 +2151,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method DEFINE_PARAMETER.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -2203,7 +2203,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method DEFINE_STATUSRESULT.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -2250,7 +2250,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 
   method DEFINE_USERCHANGE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the MPC implementation, use the
@@ -2281,7 +2281,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
  lo_property->set_edm_name( 'Username' ).                   "#EC NOTEXT
  lo_property->set_edm_type( iv_edm_type = 'String' ).       "#EC NOTEXT
  lo_property->set_is_key( ).
- lo_property->set_scale( iv_scale = '12' ).                 "#EC NOTEXT
+ lo_property->set_max_length( iv_max_length = '12' ).       "#EC NOTEXT
 
 
 ***********************************************************************************************************************************
@@ -2339,13 +2339,13 @@ CLASS /SAVY/CL_V4_USER_CHANG_MPC IMPLEMENTATION.
 ***********************************************************************************************************************************
 *   Navigation Properties
 ***********************************************************************************************************************************
- lo_nav_prop = lo_entity_type->create_navigation_property( iv_property_name = 'USERCHANGETOGROUPS' ). "#EC NOTEXT
- lo_nav_prop->set_edm_name( 'UserchangeToGroups' ).         "#EC NOTEXT
+ lo_nav_prop = lo_entity_type->create_navigation_property( iv_property_name = 'GROUPSSET' ). "#EC NOTEXT
+ lo_nav_prop->set_edm_name( 'GroupsSet' ).                  "#EC NOTEXT
  lo_nav_prop->set_target_entity_type_name( 'GROUPS' ).
  lo_nav_prop->set_target_multiplicity( 'N' ).
  lo_nav_prop->set_on_delete_action( 'None' ).               "#EC NOTEXT
- lo_nav_prop = lo_entity_type->create_navigation_property( iv_property_name = 'USERCHANGETOPARAMETER' ). "#EC NOTEXT
- lo_nav_prop->set_edm_name( 'UserchangeToParameter' ).      "#EC NOTEXT
+ lo_nav_prop = lo_entity_type->create_navigation_property( iv_property_name = 'PARAMETERSET' ). "#EC NOTEXT
+ lo_nav_prop->set_edm_name( 'ParameterSet' ).               "#EC NOTEXT
  lo_nav_prop->set_target_entity_type_name( 'PARAMETER' ).
  lo_nav_prop->set_target_multiplicity( 'N' ).
  lo_nav_prop->set_on_delete_action( 'None' ).               "#EC NOTEXT

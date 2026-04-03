@@ -1,6 +1,6 @@
-class /SAVY/CL_V4_USER_CHANG_DPC_EXT definition
+class /SAVY/CL_V4_USER_PR_02_DPC_EXT definition
   public
-  inheriting from /SAVY/CL_V4_USER_CHANG_DPC
+  inheriting from /SAVY/CL_V4_USER_PR_02_DPC
   create public .
 
 public section.
@@ -13,42 +13,29 @@ ENDCLASS.
 
 
 
-CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
+CLASS /SAVY/CL_V4_USER_PR_02_DPC_EXT IMPLEMENTATION.
 
 
   METHOD /iwbep/if_v4_dp_advanced~create_entity.
 
-    DATA: BEGIN OF ltt_deep_struc,
-            statusresultset TYPE TABLE OF /SAVY/CL_V4_USER_CHANG_mpc=>ts_statusresult.
-            INCLUDE TYPE /SAVY/CL_V4_USER_CHANG_mpc=>ts_userchange.
-    DATA:   parameterset    TYPE TABLE OF /SAVY/CL_V4_USER_CHANG_mpc=>ts_parameter,
-            groupsset       TYPE TABLE OF /SAVY/CL_V4_USER_CHANG_mpc=>ts_groups,
-          END OF ltt_deep_struc.
+    DATA: BEGIN OF ltt_prof.
+            INCLUDE TYPE /savy/cl_v4_user_pr_02_mpc=>ts_userunassign.
+    DATA:   userprofilesset TYPE TABLE OF /savy/cl_v4_user_pr_02_mpc=>ts_userprofiles.
+    DATA: END OF ltt_prof.
 
-    DATA: ls_deep            LIKE ltt_deep_struc,
+    DATA: ls_deep            LIKE ltt_prof,
           lv_username        TYPE bapibname-bapibname,
-          ls_logon           TYPE bapilogond,
-          ls_logonx          TYPE bapilogonx,
-          ls_address         TYPE bapiaddr3,
-          ls_addressx        TYPE bapiaddr3x,
-          ls_defaults        TYPE bapidefaul,
-          ls_defaultsx       TYPE bapidefax,
-          ls_company         TYPE bapiuscomp,
-          ls_companyx        TYPE bapiuscomx,
-          ls_refuser         TYPE bapirefus,
-          ls_refuserx        TYPE bapirefusx,
-          ls_parameterx      TYPE bapiparamx,
-          lt_parameter       TYPE TABLE OF bapiparam,
-          lt_para_ref        TYPE ustyp_t_parameters,
-          ls_groupsx         TYPE bapigroupx,
-          lt_groups          TYPE TABLE OF bapigroups,
+          lt_proflist        TYPE TABLE OF bapiprof,
+          lt_profiles        TYPE TABLE OF bapiprof,
           lt_return          TYPE TABLE OF bapiret2,
+          lv_user_exists     TYPE c LENGTH 1,
           lv_msgtext         TYPE string,
           lx_exception       TYPE REF TO cx_root,
-          lv_user_exists     TYPE abap_bool,
-          lr_applog          TYPE REF TO /savy/cl_app_log,
-          ls_result          TYPE /SAVY/CL_V4_USER_CHANG_mpc=>ts_statusresult,
           ls_mesg            TYPE bal_s_msg,
+          lr_applog          TYPE REF TO /savy/cl_app_log,
+          lt_uprofiles       TYPE STANDARD TABLE OF /savy/i_user_profiles,
+          lt_prof_all        TYPE STANDARD TABLE OF /savy/i_profiles_get,
+          lv_char50          TYPE char50,
           lt_message         TYPE /iwbep/if_v4_runtime_types=>ty_t_message,
           ls_message         TYPE /iwbep/if_v4_runtime_types=>ty_s_message,
           ls_done_list       TYPE /iwbep/if_v4_requ_adv_create=>ty_s_todo_process_list,
@@ -76,7 +63,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
         ls_mesg-msgno = '001'.
         lr_applog->msg_add_log( im_msg = ls_mesg ).
 
-      CATCH cx_sy_create_object_error.
+      CATCH cx_sy_create_object_error INTO lx_exception.
         " Technical - App log creation failed
         RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
           EXPORTING
@@ -109,7 +96,6 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
         lr_applog->msg_add_log( im_msg = ls_mesg ).
         lr_applog->save_to_db( ).
         COMMIT WORK AND WAIT.
-
         " Add custom message to message container
         CLEAR ls_message.
         ls_message-class      = lc_msgid.
@@ -132,14 +118,14 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
     " Step 3: Authorization Check
     "-----------------------------------------------------------------
     AUTHORITY-CHECK OBJECT '/SAVY/USER'
-      ID '/SAVY/USER' FIELD sy-uname
-      ID 'ACTVT'      FIELD '02'.
+      ID '/SAVY/USER' FIELD lv_username
+      ID 'ACTVT'      FIELD '23'.
 
     IF sy-subrc <> 0.
       CLEAR ls_mesg.
       ls_mesg-msgty = 'E'.
       ls_mesg-msgid = lc_msgid.
-      ls_mesg-msgno = '020'.
+      ls_mesg-msgno = '065'.
       ls_mesg-msgv1 = sy-uname.
       lr_applog->msg_add_log( im_msg = ls_mesg ).
       lr_applog->save_to_db( ).
@@ -148,7 +134,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
       " Add custom message to message container
       CLEAR ls_message.
       ls_message-class      = lc_msgid.
-      ls_message-number     = '020'.      " ← Your custom message number
+      ls_message-number     = '065'.      " ← Your custom message number
       ls_message-variable_1 = sy-uname.
       ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
       APPEND ls_message TO lt_message.
@@ -167,21 +153,19 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
     "-----------------------------------------------------------------
     TRY.
         io_request->get_busi_data( IMPORTING es_busi_data = ls_deep ).
-
-        IF 1 = 2. MESSAGE i072(/savy/messages). ENDIF.
+        IF 1 = 2. MESSAGE i066(/savy/messages). ENDIF.
         CLEAR ls_mesg.
         ls_mesg-msgty = 'I'.
         ls_mesg-msgid = lc_msgid.
-        ls_mesg-msgno = '072'.
+        ls_mesg-msgno = '066'.
         ls_mesg-msgv1 = ls_deep-username.
         lr_applog->msg_add_log( im_msg = ls_mesg ).
 
       CATCH cx_root INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
-
         CLEAR ls_mesg.
         ls_mesg-msgty = 'E'.
-        ls_mesg-msgid = '/SAVY/MESSAGES'.
+        ls_mesg-msgid = lc_msgid.
         ls_mesg-msgno = '006'.
         ls_mesg-msgv1 = lv_msgtext.
         lr_applog->msg_add_log( im_msg = ls_mesg ).
@@ -209,12 +193,11 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
     "-----------------------------------------------------------------
     " Step 5: Input Validation
     "-----------------------------------------------------------------
-    lv_username     = ls_deep-username.
+    lv_username      = ls_deep-username.
     TRANSLATE lv_username TO UPPER CASE.
-    ls_deep-version = /savy/cl_app_log=>gv_version.
+    ls_deep-version  = /savy/cl_app_log=>gv_version.
 
     IF lv_username IS INITIAL.
-
       CLEAR ls_mesg.
       ls_mesg-msgty = 'E'.
       ls_mesg-msgid = lc_msgid.
@@ -241,7 +224,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
     ENDIF.
 
     "-----------------------------------------------------------------
-    " Step 6: Check If User Already Exists
+    " Step 6: Check If User Not Exists
     "-----------------------------------------------------------------
     TRY.
         SELECT SINGLE @abap_true
@@ -250,13 +233,11 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
             AND uflag = @lc_user_unlocked
           INTO @lv_user_exists.
 
-        IF sy-subrc <> lc_subrc_success
-       AND lv_user_exists = abap_false.
-
+        IF sy-subrc <> lc_subrc_success.
           CLEAR ls_mesg.
           ls_mesg-msgty = 'E'.
           ls_mesg-msgid = lc_msgid.
-          ls_mesg-msgno = '073'.
+          ls_mesg-msgno = '021'.
           ls_mesg-msgv1 = lv_username.
           lr_applog->msg_add_log( im_msg = ls_mesg ).
           lr_applog->save_to_db( ).
@@ -265,7 +246,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
           " Add custom message to message container
           CLEAR ls_message.
           ls_message-class      = lc_msgid.
-          ls_message-number     = '073'.      " ← Your custom message number
+          ls_message-number     = '021'.      " ← Your custom message number
           ls_message-variable_1 = lv_username.
           ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
           APPEND ls_message TO lt_message.
@@ -288,7 +269,6 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
 
       CATCH cx_sy_open_sql_db INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
-
         CLEAR ls_mesg.
         ls_mesg-msgty = 'E'.
         ls_mesg-msgid = lc_msgid.
@@ -317,91 +297,260 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
             previous         = lx_exception.
     ENDTRY.
 
-    "-----------------------------------------------------------------
-    " Step 7: Process Reference User Parameters
-    "-----------------------------------------------------------------
-    ls_refuser = ls_deep-ref_user.
+    " Validate profiles not empty
+    lt_profiles = ls_deep-userprofilesset.
 
-    IF ls_refuser-ref_user IS NOT INITIAL.
+    IF lt_profiles IS INITIAL.
       CLEAR ls_mesg.
-      ls_mesg-msgty = 'I'.
+      ls_mesg-msgty = 'E'.
       ls_mesg-msgid = lc_msgid.
-      ls_mesg-msgno = '012'.
-      ls_mesg-msgv1 = ls_refuser-ref_user.
+      ls_mesg-msgno = '059'.
+      ls_mesg-msgv1 = lv_username.
       lr_applog->msg_add_log( im_msg = ls_mesg ).
+      lr_applog->save_to_db( ).
+      COMMIT WORK AND WAIT.
 
-      CALL FUNCTION 'SUSR_USER_PARAMETERS_GET'
+      " Add custom message to message container
+      CLEAR ls_message.
+      ls_message-class      = lc_msgid.
+      ls_message-number     = '059'.      " ← Your custom message number
+      ls_message-variable_1 = lv_username.
+      ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+      APPEND ls_message TO lt_message.
+
+      " Set message in response before raising exception
+      io_response->set_header_messages( it_message = lt_message ).
+
+      " 500 Internal - Database error
+      RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
         EXPORTING
-          user_name           = ls_refuser-ref_user
-          with_text           = 'X'
-        TABLES
-          user_parameters     = lt_para_ref
-        EXCEPTIONS
-          user_name_not_exist = 1
-          OTHERS              = 2.
-
-      CLEAR ls_mesg.
-      ls_mesg-msgty = COND #( WHEN sy-subrc = 0 THEN 'I' ELSE 'W' ).
-      ls_mesg-msgid = lc_msgid.
-      ls_mesg-msgno = COND #( WHEN sy-subrc = 0 THEN '013' ELSE '014' ).
-      ls_mesg-msgv1 = ls_refuser-ref_user.
-      ls_mesg-msgv2 = COND #( WHEN sy-subrc = 0 THEN lines( lt_para_ref ) ELSE '' ).
-      lr_applog->msg_add_log( im_msg = ls_mesg ).
+          http_status_code = '500'
+          previous         = lx_exception.
     ENDIF.
 
     "-----------------------------------------------------------------
-    " Step 8: Map Input to BAPI Structures
+    " Step 8:  Validate all profiles exist in master data
     "-----------------------------------------------------------------
-    ls_logon      = ls_deep-logondata.
-    ls_logonx     = ls_deep-logondatax.
-    ls_defaults   = ls_deep-defaults.
-    ls_defaultsx  = ls_deep-defaultsx.
-    ls_address    = ls_deep-address.
-    ls_addressx   = ls_deep-addressx.
-    ls_company    = ls_deep-company.
-    ls_companyx   = ls_deep-companyx.
-    ls_parameterx = ls_deep-parameterx.
-    ls_groupsx    = ls_deep-groupsx.
+    TRY.
+        SELECT * FROM /savy/i_profiles_get
+          INTO TABLE @lt_prof_all
+          FOR ALL ENTRIES IN @lt_profiles
+          WHERE profilename = @lt_profiles-bapiprof.
 
-    " Merge parameters
-    lt_parameter = ls_deep-parameterset.
-    APPEND LINES OF lt_para_ref TO lt_parameter.
-    SORT lt_parameter BY parid.
-    DELETE ADJACENT DUPLICATES FROM lt_parameter COMPARING parid.
+        IF sy-subrc <> lc_subrc_success.
+          CLEAR ls_mesg.
+          ls_mesg-msgty = 'E'.
+          ls_mesg-msgid = lc_msgid.
+          ls_mesg-msgno = '060'.
+          ls_mesg-msgv1 = lv_username.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+          lr_applog->save_to_db( ).
+          COMMIT WORK AND WAIT.
 
-    " Groups
-    lt_groups = ls_deep-groupsset.
+          " Add custom message to message container
+          CLEAR ls_message.
+          ls_message-class      = lc_msgid.
+          ls_message-number     = '060'.      " ← Your custom message number
+          ls_message-variable_1 = lv_username.
+          ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+          APPEND ls_message TO lt_message.
+
+          " Set message in response before raising exception
+          io_response->set_header_messages( it_message = lt_message ).
+
+          " 500 Internal - Database error
+          RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+            EXPORTING
+              http_status_code = '500'
+              previous         = lx_exception.
+        ENDIF.
+
+        " Check each profile exists in master data
+        LOOP AT lt_profiles ASSIGNING FIELD-SYMBOL(<fs_profiles>).
+          TRY.
+              DATA(ls_profile) = lt_prof_all[ profilename = <fs_profiles>-bapiprof ].
+            CATCH cx_sy_itab_line_not_found INTO lx_exception.
+              CLEAR ls_mesg.
+              ls_mesg-msgty = 'E'.
+              ls_mesg-msgid = lc_msgid.
+              ls_mesg-msgno = '061'.
+              ls_mesg-msgv1 = <fs_profiles>-bapiprof.
+              lr_applog->msg_add_log( im_msg = ls_mesg ).
+          ENDTRY.
+        ENDLOOP.
+
+      CATCH cx_sy_open_sql_db INTO lx_exception.
+        lv_msgtext = lx_exception->get_text( ).
+        CLEAR ls_mesg.
+        ls_mesg-msgty = 'E'.
+        ls_mesg-msgid = lc_msgid.
+        ls_mesg-msgno = '011'.
+        ls_mesg-msgv1 = lv_username.
+        ls_mesg-msgv2 = lv_msgtext.
+        lr_applog->msg_add_log( im_msg = ls_mesg ).
+        lr_applog->save_to_db( ).
+        COMMIT WORK AND WAIT.
+
+        " Add custom message to message container
+        CLEAR ls_message.
+        ls_message-class      = lc_msgid.
+        ls_message-number     = '011'.      " ← Your custom message number
+        ls_message-variable_1 = lv_username.
+        ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+        APPEND ls_message TO lt_message.
+
+        " Set message in response before raising exception
+        io_response->set_header_messages( it_message = lt_message ).
+
+        " 500 Internal - Database error
+        RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+          EXPORTING
+            http_status_code = '500'
+            previous         = lx_exception.
+    ENDTRY.
+
+    " Get existing user profiles
+    TRY.
+        SELECT * FROM /savy/i_user_profiles
+          INTO TABLE @lt_uprofiles
+          WHERE username = @lv_username.
+
+        IF sy-subrc <> lc_subrc_success.
+          CLEAR ls_mesg.
+          ls_mesg-msgty = 'E'.
+          ls_mesg-msgid = lc_msgid.
+          ls_mesg-msgno = '070'.
+          ls_mesg-msgv1 = lv_username.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+          lr_applog->save_to_db( ).
+
+          " Add custom message to message container
+          CLEAR ls_message.
+          ls_message-class      = lc_msgid.
+          ls_message-number     = '070'.      " ← Your custom message number
+          ls_message-variable_1 = lv_username.
+          ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+          APPEND ls_message TO lt_message.
+
+          " Set message in response before raising exception
+          io_response->set_header_messages( it_message = lt_message ).
+
+          " 500 Internal - Database error
+          RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+            EXPORTING
+              http_status_code = '500'
+              previous         = lx_exception.
+        ENDIF.
+
+      CATCH cx_sy_open_sql_db INTO lx_exception.
+        lv_msgtext = lx_exception->get_text( ).
+        CLEAR ls_mesg.
+        ls_mesg-msgty = 'E'.
+        ls_mesg-msgid = lc_msgid.
+        ls_mesg-msgno = '011'.
+        ls_mesg-msgv1 = lv_username.
+        ls_mesg-msgv2 = lv_msgtext.
+        lr_applog->msg_add_log( im_msg = ls_mesg ).
+        lr_applog->save_to_db( ).
+        COMMIT WORK AND WAIT.
+
+        " Add custom message to message container
+        CLEAR ls_message.
+        ls_message-class      = lc_msgid.
+        ls_message-number     = '011'.      " ← Your custom message number
+        ls_message-variable_1 = lv_username.
+        ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+        APPEND ls_message TO lt_message.
+
+        " Set message in response before raising exception
+        io_response->set_header_messages( it_message = lt_message ).
+
+        " 500 Internal - Database error
+        RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+          EXPORTING
+            http_status_code = '500'
+            previous         = lx_exception.
+    ENDTRY.
+
+    " Check each requested profile actually exists on user
+    LOOP AT lt_profiles ASSIGNING FIELD-SYMBOL(<fs_profiles_tmp>).
+      TRY.
+          DATA(ls_existing) = lt_uprofiles[ profile = <fs_profiles_tmp>-bapiprof ].
+        CATCH cx_sy_itab_line_not_found.
+          IF ls_existing IS INITIAL.
+            CLEAR ls_mesg.
+            ls_mesg-msgty = 'E'.
+            ls_mesg-msgid = lc_msgid.
+            ls_mesg-msgno = '069'.
+            ls_mesg-msgv1 = <fs_profiles_tmp>-bapiprof.
+            lr_applog->msg_add_log( im_msg = ls_mesg ).
+            lr_applog->save_to_db( ).
+            COMMIT WORK AND WAIT.
+
+            lv_char50 = <fs_profiles_tmp>-bapiprof.
+
+            " Add custom message to message container
+            CLEAR ls_message.
+            ls_message-class      = lc_msgid.
+            ls_message-number     = '069'.      " ← Your custom message number
+            ls_message-variable_1 = <fs_profiles_tmp>-bapiprof.
+            ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+            APPEND ls_message TO lt_message.
+
+            " Set message in response before raising exception
+            io_response->set_header_messages( it_message = lt_message ).
+
+            " 500 Internal - Database error
+            RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+              EXPORTING
+                http_status_code = '500'
+                previous         = lx_exception.
+          ENDIF.
+      ENDTRY.
+    ENDLOOP.
+
+    " Remove duplicates from user profiles
+    DATA(lt_uprofiles_unique) = lt_uprofiles.
+    DELETE ADJACENT DUPLICATES FROM lt_uprofiles_unique COMPARING profile.
+    CLEAR lt_uprofiles.
+    lt_uprofiles = lt_uprofiles_unique.
+
+    " Remove requested profiles and track unassigned ones
+    LOOP AT lt_uprofiles ASSIGNING FIELD-SYMBOL(<fs_uprofiles>).
+      READ TABLE lt_profiles TRANSPORTING NO FIELDS
+        WITH KEY bapiprof = <fs_uprofiles>-profile.
+      IF sy-subrc = 0.
+        DELETE lt_uprofiles_unique WHERE username = <fs_uprofiles>-username
+                                     AND profile  = <fs_uprofiles>-profile.
+        CONCATENATE <fs_uprofiles>-profile ls_deep-status
+          INTO ls_deep-status SEPARATED BY space.
+      ENDIF.
+    ENDLOOP.
+
+    " Build remaining profiles list to reassign
+    LOOP AT lt_uprofiles_unique ASSIGNING FIELD-SYMBOL(<fs_uprofunique>).
+      APPEND VALUE #(
+        bapiprof = <fs_uprofunique>-profile
+      ) TO lt_proflist.
+    ENDLOOP.
 
     CLEAR ls_mesg.
     ls_mesg-msgty = 'I'.
     ls_mesg-msgid = lc_msgid.
-    ls_mesg-msgno = '074'.
+    ls_mesg-msgno = '062'.
     ls_mesg-msgv1 = lv_username.
     lr_applog->msg_add_log( im_msg = ls_mesg ).
 
     "-----------------------------------------------------------------
-    " Step 9: Call BAPI_USER_CREATE1
+    " Step 9: Call BAPI_USER_PROFILES_ASSIGN
     "-----------------------------------------------------------------
     TRY.
-        CALL FUNCTION 'BAPI_USER_CHANGE'
+        CALL FUNCTION 'BAPI_USER_PROFILES_ASSIGN'
           EXPORTING
-            username   = lv_username
-            logondata  = ls_logon
-            logondatax = ls_logonx
-            defaults   = ls_defaults
-            defaultsx  = ls_defaultsx
-            address    = ls_address
-            addressx   = ls_addressx
-            parameterx = ls_parameterx
-            company    = ls_company
-            companyx   = ls_companyx
-            ref_user   = ls_refuser
-            ref_userx  = ls_refuserx
-            groupsx    = ls_groupsx
+            username = lv_username
           TABLES
-            parameter  = lt_parameter
-            return     = lt_return
-            groups     = lt_groups.
+            profiles = lt_proflist
+            return   = lt_return.
 
         LOOP AT lt_return ASSIGNING FIELD-SYMBOL(<fs_ret>).
           CLEAR ls_mesg.
@@ -414,7 +563,6 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
 
       CATCH cx_root INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
-
         CLEAR ls_mesg.
         ls_mesg-msgty = 'E'.
         ls_mesg-msgid = lc_msgid.
@@ -505,13 +653,18 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
         CLEAR ls_mesg.
         ls_mesg-msgty = 'S'.
         ls_mesg-msgid = lc_msgid.
-        ls_mesg-msgno = '076'.
-        ls_mesg-msgv1 = lv_username.
-        lr_applog->msg_add_log( im_msg = ls_mesg ).
+        ls_mesg-msgno = '067'.
+        ls_mesg-msgv1 = ls_deep-status.
+        ls_mesg-msgv2 = lv_username.
+        IF lr_applog IS BOUND.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+        ENDIF.
+
+        CONCATENATE TEXT-001 ' ' ls_deep-status
+          INTO ls_deep-status SEPARATED BY space.
 
       CATCH cx_root INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
-
         CLEAR ls_mesg.
         ls_mesg-msgty = 'E'.
         ls_mesg-msgid = lc_msgid.
@@ -545,20 +698,15 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC_EXT IMPLEMENTATION.
     "-----------------------------------------------------------------
     " Step 12: Build Success Response
     "-----------------------------------------------------------------
-    READ TABLE lt_return ASSIGNING FIELD-SYMBOL(<fs_success>)
-      WITH KEY type = 'S'.
-    IF sy-subrc = 0.
-      ls_result-username = lv_username.
-      ls_result-status   = <fs_success>-type.
-      ls_result-message  = <fs_success>-message.
-      APPEND ls_result TO ls_deep-statusresultset.
-    ENDIF.
 
-    " Set success message in response header
+    " Save application log and return response
+    lr_applog->save_to_db( ).
+
     ls_message-class      = lc_msgid.
-    ls_message-number     = '076'.
+    ls_message-number     = '067'.
     ls_message-variable_1 = lv_username.
-    ls_message-severity   = 1.
+    ls_message-severity = 1.
+*ls_message-variable_2 = ''.
     APPEND ls_message TO lt_message.
 
     io_response->set_header_messages( it_message = lt_message ).

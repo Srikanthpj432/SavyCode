@@ -147,7 +147,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~CREATE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated  on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -208,7 +208,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~DELETE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated  on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -269,7 +269,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~READ_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated  on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -332,7 +332,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~READ_ENTITY_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -393,7 +393,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method /IWBEP/IF_V4_DP_BASIC~UPDATE_ENTITY.
 *&-----------------------------------------------------------------------------------------------*
-*&* This class has been generated  on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated  on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -454,7 +454,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method GROUPSSET_CREATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -477,7 +477,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method GROUPSSET_DELETE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -500,7 +500,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method GROUPSSET_READ.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -523,7 +523,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method GROUPSSET_READ_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -546,7 +546,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method GROUPSSET_UPDATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -569,7 +569,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method PARAMETERSET_CREATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -592,7 +592,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method PARAMETERSET_DELETE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -615,7 +615,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method PARAMETERSET_READ.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -638,7 +638,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method PARAMETERSET_READ_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -661,7 +661,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method PARAMETERSET_UPDATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -684,7 +684,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_CREATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -707,7 +707,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_DELETE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -730,7 +730,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_READ.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -753,7 +753,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_READ_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -776,7 +776,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method STATUSRESULTSET_UPDATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -799,7 +799,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method USERCHANGESET_CREATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -822,7 +822,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method USERCHANGESET_DELETE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -845,7 +845,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method USERCHANGESET_READ.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -868,7 +868,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method USERCHANGESET_READ_LIST.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
@@ -891,7 +891,7 @@ CLASS /SAVY/CL_V4_USER_CHANG_DPC IMPLEMENTATION.
 
   method USERCHANGESET_UPDATE.
 *&----------------------------------------------------------------------------------------------*
-*&* This class has been generated on 23.03.2026 16:55:31 in client 100
+*&* This class has been generated on 01.04.2026 10:33:00 in client 100
 *&*
 *&*       WARNING--> NEVER MODIFY THIS CLASS <--WARNING
 *&*   If you want to change the DPC implementation, use the
