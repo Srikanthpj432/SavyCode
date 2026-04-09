@@ -53,6 +53,8 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     "-----------------------------------------------------------------
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
 
         IF 1 = 2. MESSAGE i001(/savy/messages). ENDIF.
         CLEAR ls_mesg.
@@ -70,50 +72,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     "-----------------------------------------------------------------
-    " Step 2: Get Message Container
-    "-----------------------------------------------------------------
-    TRY.
-        DATA(lo_msg) = io_response->get_message_container( ).
-
-        IF 1 = 2. MESSAGE i003(/savy/messages). ENDIF.
-        CLEAR ls_mesg.
-        ls_mesg-msgty = 'I'.
-        ls_mesg-msgid = lc_msgid.
-        ls_mesg-msgno = '003'.
-        lr_applog->msg_add_log( im_msg = ls_mesg ).
-
-      CATCH cx_root INTO lx_exception.
-        lv_msgtext = lx_exception->get_text( ).
-
-        IF 1 = 2. MESSAGE i004(/savy/messages). ENDIF.
-        CLEAR ls_mesg.
-        ls_mesg-msgty = 'E'.
-        ls_mesg-msgid = lc_msgid.
-        ls_mesg-msgno = '004'.
-        ls_mesg-msgv1 = lv_msgtext.
-        lr_applog->msg_add_log( im_msg = ls_mesg ).
-        lr_applog->save_to_db( ).
-        COMMIT WORK AND WAIT.
-        " Add custom message to message container
-        CLEAR ls_message.
-        ls_message-class      = lc_msgid.
-        ls_message-number     = '004'.      " ← Your custom message number
-        ls_message-variable_1 = sy-uname.
-        ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
-        APPEND ls_message TO lt_message.
-
-        " Set message in response before raising exception
-        io_response->set_header_messages( it_message = lt_message ).
-
-        " Technical - Cannot get message container
-        RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
-          EXPORTING
-            http_status_code = '500'
-            previous         = lx_exception.
-    ENDTRY.
-
-    "-----------------------------------------------------------------
-    " Step 3: Authorization Check
+    " Step 2: Authorization Check
     "-----------------------------------------------------------------
     AUTHORITY-CHECK OBJECT '/SAVY/USER'
       ID '/SAVY/USER' FIELD lv_username
@@ -147,10 +106,14 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDIF.
 
     "-----------------------------------------------------------------
-    " Step 4: Read Request Business Data
+    " Step 3: Read Request Business Data
     "-----------------------------------------------------------------
     TRY.
         io_request->get_busi_data( IMPORTING es_busi_data = ls_deep ).
+        lv_username      = ls_deep-username.
+        TRANSLATE lv_username TO UPPER CASE.
+        ls_deep-version  = /savy/cl_app_log=>gv_version.
+
         CLEAR ls_mesg.
         ls_mesg-msgty = 'I'.
         ls_mesg-msgid = lc_msgid.
@@ -188,12 +151,8 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     "-----------------------------------------------------------------
-    " Step 5: Input Validation
+    " Step 4: Input Validation
     "-----------------------------------------------------------------
-    lv_username      = ls_deep-username.
-    TRANSLATE lv_username TO UPPER CASE.
-    ls_deep-version  = /savy/cl_app_log=>gv_version.
-
     IF lv_username IS INITIAL.
       CLEAR ls_mesg.
       ls_mesg-msgty = 'E'.
@@ -207,7 +166,6 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
       CLEAR ls_message.
       ls_message-class      = lc_msgid.
       ls_message-number     = '008'.      " ← Your custom message number
-      ls_message-variable_1 = lv_username.
       ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
       APPEND ls_message TO lt_message.
 
@@ -221,7 +179,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDIF.
 
     "-----------------------------------------------------------------
-    " Step 6: Check If User Not Exists
+    " Step 5: Check If User Not Exists
     "-----------------------------------------------------------------
     TRY.
         DATA lv_user_exists TYPE c LENGTH 1.
@@ -296,7 +254,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     "-----------------------------------------------------------------
-    " Step 7: User Roles
+    " Step 6: User Roles
     "-----------------------------------------------------------------
     lt_roles = ls_deep-userrolesset.
 
@@ -329,7 +287,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDIF.
 
     "-----------------------------------------------------------------
-    " Step 8: Validating Existing User Roles
+    " Step 7: Validating Existing User Roles
     "-----------------------------------------------------------------
     TRY.
         SELECT * FROM /savy/i_role_get
@@ -453,7 +411,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
           lr_applog->msg_add_log( im_msg = ls_mesg ).
 
           "-----------------------------------------------------------------
-          " Step 9: Call BAPI_USER_ACTGROUPS_ASSIGN
+          " Step 8: Call BAPI_USER_ACTGROUPS_ASSIGN
           "-----------------------------------------------------------------
           TRY.
               CALL FUNCTION 'BAPI_USER_ACTGROUPS_ASSIGN'
@@ -503,7 +461,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
           ENDTRY.
 
           "-----------------------------------------------------------------
-          " Step 10: Check BAPI Return for Errors
+          " Step 9: Check BAPI Return for Errors
           "-----------------------------------------------------------------
           DATA(lv_has_error) = abap_false.
 
@@ -554,7 +512,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
           ENDIF.
 
           "-----------------------------------------------------------------
-          " Step 11: Commit Transaction
+          " Step 10: Commit Transaction
           "-----------------------------------------------------------------
           TRY.
               CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
@@ -605,31 +563,31 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
 
         ELSE.
           " User has no existing roles - nothing to unassign
-              CLEAR ls_mesg.
-              ls_mesg-msgty = 'E'.
-              ls_mesg-msgid = lc_msgid.
-              ls_mesg-msgno = '022'.
-              ls_mesg-msgv1 = lv_username.
-              lr_applog->msg_add_log( im_msg = ls_mesg ).
-              lr_applog->save_to_db( ).
-              COMMIT WORK AND WAIT.
+          CLEAR ls_mesg.
+          ls_mesg-msgty = 'E'.
+          ls_mesg-msgid = lc_msgid.
+          ls_mesg-msgno = '022'.
+          ls_mesg-msgv1 = lv_username.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+          lr_applog->save_to_db( ).
+          COMMIT WORK AND WAIT.
 
-              " Add custom message to message container
-              CLEAR ls_message.
-              ls_message-class      = lc_msgid.
-              ls_message-number     = '022'.      " ← Your custom message number
-              ls_message-variable_1 = lv_username.
-              ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
-              APPEND ls_message TO lt_message.
+          " Add custom message to message container
+          CLEAR ls_message.
+          ls_message-class      = lc_msgid.
+          ls_message-number     = '022'.      " ← Your custom message number
+          ls_message-variable_1 = lv_username.
+          ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+          APPEND ls_message TO lt_message.
 
-              " Set message in response before raising exception
-              io_response->set_header_messages( it_message = lt_message ).
+          " Set message in response before raising exception
+          io_response->set_header_messages( it_message = lt_message ).
 
-              " 500 Internal - Commit failed
-              RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
-                EXPORTING
-                  http_status_code = '500'
-                  previous         = lx_exception.
+          " 500 Internal - Commit failed
+          RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
+            EXPORTING
+              http_status_code = '500'
+              previous         = lx_exception.
         ENDIF.
 
       CATCH cx_sy_open_sql_db INTO lx_exception.
@@ -663,7 +621,7 @@ CLASS /SAVY/CL_V4_USER_RO_01_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     "-----------------------------------------------------------------
-    " Step 12: Build Success Response
+    " Step 11: Build Success Response
     "-----------------------------------------------------------------
 
     " Save application log and return response

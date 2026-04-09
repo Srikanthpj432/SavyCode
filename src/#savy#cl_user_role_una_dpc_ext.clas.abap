@@ -45,6 +45,8 @@ CLASS /SAVY/CL_USER_ROLE_UNA_DPC_EXT IMPLEMENTATION.
 
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
         IF 1 = 2.
           MESSAGE i001(/savy/messages).
         ENDIF.
@@ -152,7 +154,7 @@ CLASS /SAVY/CL_USER_ROLE_UNA_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     lv_username     = ls_deep-username.
-    TRANSLATE lv_username to UPPER CASE.
+    TRANSLATE lv_username TO UPPER CASE.
     ls_Deep-version = /savy/cl_app_log=>gv_version.
 
     IF 1 = 2.

@@ -28,8 +28,8 @@ CLASS /SAVY/CL_USER_CHANGE_DPC_EXT IMPLEMENTATION.
     DATA: BEGIN OF ltt_deep_struc,
             statusresultset TYPE TABLE OF /savy/cl_user_change_mpc=>ts_statusresult.
             INCLUDE TYPE /savy/cl_user_change_mpc=>ts_userchange.
-    DATA:   parameterset TYPE TABLE OF /savy/cl_user_change_mpc=>ts_parameter,
-            groupsset    TYPE TABLE OF /savy/cl_user_change_mpc=>ts_groups,
+    DATA:   parameterset    TYPE TABLE OF /savy/cl_user_change_mpc=>ts_parameter,
+            groupsset       TYPE TABLE OF /savy/cl_user_change_mpc=>ts_groups,
           END OF ltt_deep_struc.
 
     DATA: ls_deep        LIKE ltt_deep_struc,
@@ -67,6 +67,8 @@ CLASS /SAVY/CL_USER_CHANGE_DPC_EXT IMPLEMENTATION.
     " Initialize application log
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
         IF 1 = 2.
           MESSAGE i001(/savy/messages).
         ENDIF.

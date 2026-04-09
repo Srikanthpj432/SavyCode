@@ -45,6 +45,8 @@ CLASS /SAVY/CL_USER_ROLE_ASS_DPC_EXT IMPLEMENTATION.
 
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
         IF 1 = 2.
           MESSAGE i001(/savy/messages).
         ENDIF.
@@ -140,7 +142,7 @@ CLASS /SAVY/CL_USER_ROLE_ASS_DPC_EXT IMPLEMENTATION.
     ENDTRY.
 
     lv_username = ls_deep-username.
-    TRANSLATE lv_username to UPPER CASE.
+    TRANSLATE lv_username TO UPPER CASE.
     ls_deep-version = /savy/cl_app_log=>gv_version.
 
     " Check authorization to display user
@@ -227,18 +229,18 @@ CLASS /SAVY/CL_USER_ROLE_ASS_DPC_EXT IMPLEMENTATION.
               message_container = lo_msg.
         ENDIF.
 
-          " Log successful user validation
-          IF 1 = 2.
-            MESSAGE i010(/savy/messages).
-          ENDIF.
-          CLEAR ls_mesg.
-          ls_mesg-msgty = 'S'.
-          ls_mesg-msgid = '/SAVY/MESSAGES'.
-          ls_mesg-msgno = '010'.
-          ls_mesg-msgv1 = lv_username.
-          IF lr_applog IS BOUND.
-            lr_applog->msg_add_log( im_msg = ls_mesg ).
-          ENDIF.
+        " Log successful user validation
+        IF 1 = 2.
+          MESSAGE i010(/savy/messages).
+        ENDIF.
+        CLEAR ls_mesg.
+        ls_mesg-msgty = 'S'.
+        ls_mesg-msgid = '/SAVY/MESSAGES'.
+        ls_mesg-msgno = '010'.
+        ls_mesg-msgv1 = lv_username.
+        IF lr_applog IS BOUND.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+        ENDIF.
 
       CATCH cx_sy_open_sql_db INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
@@ -521,18 +523,18 @@ CLASS /SAVY/CL_USER_ROLE_ASS_DPC_EXT IMPLEMENTATION.
       CATCH cx_root INTO lx_exception.
         lv_msgtext = lx_exception->get_text( ).
 
-          IF 1 = 2.
-            MESSAGE i029(/savy/messages).
-          ENDIF.
-          CLEAR ls_mesg.
-          ls_mesg-msgty = 'E'.
-          ls_mesg-msgid = '/SAVY/MESSAGES'.
-          ls_mesg-msgno = '029'.
-          ls_mesg-msgv1 = lv_username.
-          ls_mesg-msgv2 = lv_msgtext.
-          IF lr_applog IS BOUND.
-            lr_applog->msg_add_log( im_msg = ls_mesg ).
-          ENDIF.
+        IF 1 = 2.
+          MESSAGE i029(/savy/messages).
+        ENDIF.
+        CLEAR ls_mesg.
+        ls_mesg-msgty = 'E'.
+        ls_mesg-msgid = '/SAVY/MESSAGES'.
+        ls_mesg-msgno = '029'.
+        ls_mesg-msgv1 = lv_username.
+        ls_mesg-msgv2 = lv_msgtext.
+        IF lr_applog IS BOUND.
+          lr_applog->msg_add_log( im_msg = ls_mesg ).
+        ENDIF.
 
         CALL METHOD lr_applog->save_to_db( ).
 

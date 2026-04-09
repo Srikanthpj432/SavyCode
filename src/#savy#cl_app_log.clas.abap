@@ -38,8 +38,8 @@ CLASS /SAVY/CL_APP_LOG IMPLEMENTATION.
     IF gv_log_handle IS INITIAL .
       DATA : ls_log TYPE bal_s_log.        "log variable
 
-      ls_log-object    = gc_main_log.
-      ls_log-subobject = gc_sub_log.
+      ls_log-object    = gv_object.           "gc_main_log.
+      ls_log-subobject = gv_subobject.        "gc_sub_log.
       ls_log-extnumber = sy-uname.
       ls_log-aldate    = sy-datum.
       ls_log-altime    = sy-uzeit.

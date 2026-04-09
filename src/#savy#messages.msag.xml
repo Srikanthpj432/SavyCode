@@ -476,6 +476,78 @@
      <MSGNR>077</MSGNR>
      <TEXT>Merged &amp;1 existing profiles with &amp;2 new profiles for user &amp;3</TEXT>
     </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>078</MSGNR>
+     <TEXT>RFC Read on table &amp;1 by user &amp;2 on &amp;3 at &amp;4</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>079</MSGNR>
+     <TEXT>WHERE clause: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>080</MSGNR>
+     <TEXT>NOT AUTHORIZED: Table &amp;1 access denied for user &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>081</MSGNR>
+     <TEXT>TABLE NOT AVAILABLE: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>082</MSGNR>
+     <TEXT>TABLE WITHOUT DATA: &amp;1 is internal table type</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>083</MSGNR>
+     <TEXT>FIELD NOT VALID: &amp;1 in table &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>084</MSGNR>
+     <TEXT>DATA BUFFER EXCEEDED for table &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>085</MSGNR>
+     <TEXT>Fields requested: &amp;1</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>086</MSGNR>
+     <TEXT>SUCCESS: Table &amp;1 returned &amp;2 rows for user &amp;3</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>087</MSGNR>
+     <TEXT>BLOCKED: &amp;1 denied by &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>088</MSGNR>
+     <TEXT>DB ERROR on table &amp;1: &amp;2</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>/SAVY/MESSAGES</ARBGB>
+     <MSGNR>089</MSGNR>
+     <TEXT>Suspect WHERE clause on table &amp;1: &amp;2</TEXT>
+    </T100>
    </T100>
   </asx:values>
  </asx:abap>

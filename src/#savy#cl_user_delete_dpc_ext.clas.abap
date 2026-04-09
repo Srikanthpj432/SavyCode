@@ -37,6 +37,8 @@ CLASS /SAVY/CL_USER_DELETE_DPC_EXT IMPLEMENTATION.
     "" Create Application Log ""
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
         IF 1 = 2.
           MESSAGE i001(/savy/messages).
         ENDIF.
@@ -377,7 +379,7 @@ CLASS /SAVY/CL_USER_DELETE_DPC_EXT IMPLEMENTATION.
       ENDTRY.
 
       " Build success response
-      LOOP AT lt_return ASSIGNING FIELD-SYMBOL(<fs_success>) where type = 'S'.
+      LOOP AT lt_return ASSIGNING FIELD-SYMBOL(<fs_success>) WHERE type = 'S'.
 
         ls_result-username = lv_username.
         ls_result-status   = <fs_success>-type.

@@ -54,6 +54,8 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   "-----------------------------------------------------------------
   TRY.
       CREATE OBJECT lr_applog.
+      lr_applog->gv_object    = '/SAVY/ROOT'.
+      lr_Applog->gv_subobject = '/SAVY/IAM'.
 
       IF 1 = 2. MESSAGE i001(/savy/messages). ENDIF.
       CLEAR ls_mesg.
@@ -71,47 +73,38 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDTRY.
 
   "-----------------------------------------------------------------
-  " Step 2: Get Message Container
+  " Step 2: Authorization Check
   "-----------------------------------------------------------------
-  TRY.
-      DATA(lo_msg) = io_response->get_message_container( ).
+  AUTHORITY-CHECK OBJECT '/SAVY/USER'
+    ID '/SAVY/USER' FIELD lv_username
+    ID 'ACTVT'      FIELD '23'.
 
-      IF 1 = 2. MESSAGE i003(/savy/messages). ENDIF.
-      CLEAR ls_mesg.
-      ls_mesg-msgty = 'I'.
-      ls_mesg-msgid = lc_msgid.
-      ls_mesg-msgno = '003'.
-      lr_applog->msg_add_log( im_msg = ls_mesg ).
+  IF sy-subrc <> 0.
+    CLEAR ls_mesg.
+    ls_mesg-msgty = 'E'.
+    ls_mesg-msgid = lc_msgid.
+    ls_mesg-msgno = '058'.
+    ls_mesg-msgv1 = sy-uname.
+    lr_applog->msg_add_log( im_msg = ls_mesg ).
+    lr_applog->save_to_db( ).
+    COMMIT WORK AND WAIT.
 
-    CATCH cx_root INTO lx_exception.
-      lv_msgtext = lx_exception->get_text( ).
+    " Add custom message to message container
+    CLEAR ls_message.
+    ls_message-class      = lc_msgid.
+    ls_message-number     = '058'.      " ← Your custom message number
+    ls_message-variable_1 = sy-uname.
+    ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
+    APPEND ls_message TO lt_message.
 
-      IF 1 = 2. MESSAGE i004(/savy/messages). ENDIF.
-      CLEAR ls_mesg.
-      ls_mesg-msgty = 'E'.
-      ls_mesg-msgid = lc_msgid.
-      ls_mesg-msgno = '004'.
-      ls_mesg-msgv1 = lv_msgtext.
-      lr_applog->msg_add_log( im_msg = ls_mesg ).
-      lr_applog->save_to_db( ).
-      COMMIT WORK AND WAIT.
-      " Add custom message to message container
-      CLEAR ls_message.
-      ls_message-class      = lc_msgid.
-      ls_message-number     = '004'.      " ← Your custom message number
-      ls_message-variable_1 = sy-uname.
-      ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
-      APPEND ls_message TO lt_message.
+    " Set message in response before raising exception
+    io_response->set_header_messages( it_message = lt_message ).
 
-      " Set message in response before raising exception
-      io_response->set_header_messages( it_message = lt_message ).
-
-      " Technical - Cannot get message container
-      RAISE EXCEPTION TYPE /iwbep/cx_v4_runtime
-        EXPORTING
-          http_status_code = '500'
-          previous         = lx_exception.
-  ENDTRY.
+    " 403 Forbidden - No authorization
+    RAISE EXCEPTION TYPE /iwbep/cx_v4_access_check
+      EXPORTING
+        http_status_code = '403'.
+  ENDIF.
 
   "-----------------------------------------------------------------
   " Step 3: Read Request Business Data
@@ -160,41 +153,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDTRY.
 
   "-----------------------------------------------------------------
-  " Step 4: Authorization Check
-  "-----------------------------------------------------------------
-  AUTHORITY-CHECK OBJECT '/SAVY/USER'
-    ID '/SAVY/USER' FIELD lv_username
-    ID 'ACTVT'      FIELD '23'.
-
-  IF sy-subrc <> 0.
-    CLEAR ls_mesg.
-    ls_mesg-msgty = 'E'.
-    ls_mesg-msgid = lc_msgid.
-    ls_mesg-msgno = '058'.
-    ls_mesg-msgv1 = sy-uname.
-    lr_applog->msg_add_log( im_msg = ls_mesg ).
-    lr_applog->save_to_db( ).
-    COMMIT WORK AND WAIT.
-
-    " Add custom message to message container
-    CLEAR ls_message.
-    ls_message-class      = lc_msgid.
-    ls_message-number     = '058'.      " ← Your custom message number
-    ls_message-variable_1 = sy-uname.
-    ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
-    APPEND ls_message TO lt_message.
-
-    " Set message in response before raising exception
-    io_response->set_header_messages( it_message = lt_message ).
-
-    " 403 Forbidden - No authorization
-    RAISE EXCEPTION TYPE /iwbep/cx_v4_access_check
-      EXPORTING
-        http_status_code = '403'.
-  ENDIF.
-
-  "-----------------------------------------------------------------
-  " Step 5: Input Validation
+  " Step 4: Input Validation
   "-----------------------------------------------------------------
   IF lv_username IS INITIAL.
     CLEAR ls_mesg.
@@ -209,7 +168,6 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
     CLEAR ls_message.
     ls_message-class      = lc_msgid.
     ls_message-number     = '008'.      " ← Your custom message number
-    ls_message-variable_1 = lv_username.
     ls_message-severity   = 3.          " 1=Info 2=Warning 3=Error
     APPEND ls_message TO lt_message.
 
@@ -223,7 +181,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDIF.
 
   "-----------------------------------------------------------------
-  " Step 6: Check If User Not Exists
+  " Step 5: Check If User Not Exists
   "-----------------------------------------------------------------
   TRY.
       SELECT SINGLE @abap_true
@@ -297,7 +255,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDTRY.
 
   "-----------------------------------------------------------------
-  " Step 7: Profiles
+  " Step 6: Profiles
   "-----------------------------------------------------------------
   lt_profiles = ls_deep-userprofilesset.
 
@@ -330,7 +288,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDIF.
 
   "-----------------------------------------------------------------
-  " Step 8:  Validate all profiles exist in master data
+  " Step 7:  Validate all profiles exist in master data
   "-----------------------------------------------------------------
   TRY.
       SELECT * FROM /savy/i_profiles_get
@@ -511,7 +469,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   lr_applog->msg_add_log( im_msg = ls_mesg ).
 
   "-----------------------------------------------------------------
-  " Step 9: Call BAPI_USER_PROFILES_ASSIGN
+  " Step 8: Call BAPI_USER_PROFILES_ASSIGN
   "-----------------------------------------------------------------
   TRY.
       CALL FUNCTION 'BAPI_USER_PROFILES_ASSIGN'
@@ -561,7 +519,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDTRY.
 
   "-----------------------------------------------------------------
-  " Step 10: Check BAPI Return for Errors
+  " Step 9: Check BAPI Return for Errors
   "-----------------------------------------------------------------
   DATA(lv_has_error) = abap_false.
 
@@ -612,7 +570,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDIF.
 
   "-----------------------------------------------------------------
-  " Step 11: Commit Transaction
+  " Step 10: Commit Transaction
   "-----------------------------------------------------------------
   TRY.
       CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
@@ -663,7 +621,7 @@ METHOD /iwbep/if_v4_dp_advanced~create_entity.
   ENDTRY.
 
   "-----------------------------------------------------------------
-  " Step 12: Build Success Response
+  " Step 11: Build Success Response
   "-----------------------------------------------------------------
   ls_message-class      = lc_msgid.
   ls_message-number     = '064'.

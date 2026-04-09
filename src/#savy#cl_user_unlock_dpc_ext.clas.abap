@@ -38,6 +38,8 @@ CLASS /SAVY/CL_USER_UNLOCK_DPC_EXT IMPLEMENTATION.
     "" Create Application Log ""
     TRY.
         CREATE OBJECT lr_applog.
+        lr_applog->gv_object    = '/SAVY/ROOT'.
+        lr_Applog->gv_subobject = '/SAVY/IAM'.
         IF 1 = 2.
           MESSAGE i001(/savy/messages).
         ENDIF.
