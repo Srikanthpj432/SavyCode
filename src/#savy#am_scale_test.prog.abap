@@ -78,7 +78,19 @@ START-OF-SELECTION.
 
   IF p_mode_a = abap_true.
     WRITE: / 'Mode A: Volume Scalability Test (/SAVY/AM)'.
-    WRITE: / '============================================='.
+    WRITE: / '=========================================='.
+    PERFORM run_volume_test.
+  ELSE.
+    WRITE: / 'Mode B: Role Density Scalability (/SAVY/AM)'.
+    WRITE: / '============================================'.
+    WRITE: / 'Users:', p_busers.
+    PERFORM run_role_scale_test.
+  ENDIF.
+
+  SKIP.
+  WRITE: / 'Test complete. Displaying results...'.
+  PERFORM display_alv.
+
 FORM run_volume_test.
 
   DATA: lt_tiers TYPE TABLE OF i,
