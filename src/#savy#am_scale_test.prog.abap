@@ -1,5 +1,5 @@
 *&---------------------------------------------------------------------*
-*& Report /SAVY/SCALE_TEST
+*& Report /SAVY/AM_SCALE_TEST
 *& Scalability & Sizing Test for User Access Management
 *& Package: /SAVY/AM
 *&
@@ -60,16 +60,11 @@ SELECTION-SCREEN BEGIN OF BLOCK b3 WITH FRAME TITLE TEXT-003.
 SELECTION-SCREEN END OF BLOCK b3.
 
 SELECTION-SCREEN BEGIN OF BLOCK b4 WITH FRAME TITLE TEXT-004.
-  PARAMETERS: p_role  AS CHECKBOX DEFAULT 'X',
-              p_rolv4 AS CHECKBOX DEFAULT 'X',
-              p_prof  AS CHECKBOX DEFAULT 'X',
-              p_user  AS CHECKBOX DEFAULT 'X',
-              p_auth  AS CHECKBOX DEFAULT 'X',
-              p_chg   AS CHECKBOX DEFAULT 'X',
-              p_tcode AS CHECKBOX DEFAULT 'X',
-              p_wl    AS CHECKBOX DEFAULT 'X',
-              p_sec   AS CHECKBOX DEFAULT 'X',
-              p_tbl   AS CHECKBOX DEFAULT 'X'.
+  PARAMETERS: p_uget  AS CHECKBOX DEFAULT 'X',
+              p_udelt AS CHECKBOX DEFAULT 'X',
+              p_urole AS CHECKBOX DEFAULT 'X',
+              p_rget  AS CHECKBOX DEFAULT 'X',
+              p_pget  AS CHECKBOX DEFAULT 'X'.
 SELECTION-SCREEN END OF BLOCK b4.
 
 SELECTION-SCREEN BEGIN OF BLOCK b5 WITH FRAME TITLE TEXT-005.
@@ -84,22 +79,6 @@ START-OF-SELECTION.
   IF p_mode_a = abap_true.
     WRITE: / 'Mode A: Volume Scalability Test (/SAVY/AM)'.
     WRITE: / '============================================='.
-    PERFORM run_volume_test.
-  ELSE.
-    WRITE: / 'Mode B: Role Complexity Scalability (/SAVY/AM)'.
-    WRITE: / '================================================'.
-    WRITE: / 'Users:', p_busers.
-    PERFORM run_role_scale_test.
-  ENDIF.
-
-  SKIP.
-  WRITE: / 'Test complete. Displaying results...'.
-  PERFORM display_alv.
-
-*&---------------------------------------------------------------------*
-*& Form RUN_VOLUME_TEST
-*& Mode A: Test all selected service views at each volume tier
-*&---------------------------------------------------------------------*
 FORM run_volume_test.
 
   DATA: lt_tiers TYPE TABLE OF i,
@@ -114,91 +93,67 @@ FORM run_volume_test.
 
   LOOP AT lt_tiers INTO lv_tier.
     IF lv_tier >= 1000.
-      lv_label = |{ lv_tier / 1000 }K Rows|.
+      lv_label = |{ lv_tier / 1000 }K Users|.
     ELSE.
-      lv_label = |{ lv_tier } Rows|.
+      lv_label = |{ lv_tier } Users|.
     ENDIF.
 
     SKIP.
     WRITE: / '--- Tier:', lv_label, '---'.
 
-*   SD_ROLE_EXTRACTION (10 views)
-    IF p_role = abap_true.
-      PERFORM measure USING '/SAVY/I_ROLE_DEFINITION'  'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_HIERARCHY'   'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_AUTHDATA'    'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_SERVICE'     'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_USERS'       'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_TIMESTAMP'   'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_DESCR'       'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_MENUDATA'    'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_PROFILE'     'SD_ROLE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_STATUS'      'SD_ROLE_EXTRACTION' lv_tier lv_label.
+*   SD_USER_GET (14 views)
+    IF p_uget = abap_true.
+      PERFORM measure USING '/SAVY/I_USER_GET'               'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ADDRESS'           'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_DEFAULTS'          'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_SNC'               'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_REFERENCE'         'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_GROUPS'            'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_LOGON'             'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ADMINDATA'         'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_UCLASSYS'          'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_COMPANY'           'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_PROFILES'          'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ACTROLES'          'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_PARAMETERS'        'SD_USER_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_CHANGE_LOG'        'SD_USER_GET' lv_tier lv_label.
     ENDIF.
 
-*   SD_ROLE_EXTRACTION_V4 (7 views)
-    IF p_rolv4 = abap_true.
-      PERFORM measure USING '/SAVY/I_ROLE_DEFINITION_V4' 'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_TRANS_V4'      'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_SERVICE_V4'    'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_AUTHDATA_V4'   'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_USERS_V4'      'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_TIMESTAMP_V4'  'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_ROLE_DESCR_V4'      'SD_ROLE_EXTRACTION_V4' lv_tier lv_label.
+*   SD_USER_GET_DELTA (14 views)
+    IF p_udelt = abap_true.
+      PERFORM measure USING '/SAVY/I_USER_GET_DELTA'         'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_CHANGE_AUDITITEM'  'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ADDRESS_DELTA'     'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_DEFAULTS_DELTA'    'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_SNC_DELTA'         'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_REFERENCE_DELTA'   'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_GROUP_DELTA'       'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_LOGON_DELTA'       'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ADMINDATA_DELTA'   'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_UCLASSSYS_DELTA'   'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_COMPANY_DELTA'     'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_PROFILES_DELTA'    'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_ROLES_DELTA'       'SD_USER_GET_DELTA' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_USER_PARAMETERS_DELTA'  'SD_USER_GET_DELTA' lv_tier lv_label.
     ENDIF.
 
-*   SD_PROFILE_EXTRACTION (6 views)
-    IF p_prof = abap_true.
-      PERFORM measure USING '/SAVY/I_PROFILE_META'         'SD_PROFILE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_PROFILE_AUTHDATA'     'SD_PROFILE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_PROFILE_AUTHVALUES'   'SD_PROFILE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_PROFILE_DESCR'        'SD_PROFILE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_PROFILE_AOBJECT_TEXT' 'SD_PROFILE_EXTRACTION' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_PROFILE_ANAME_TEXT'   'SD_PROFILE_EXTRACTION' lv_tier lv_label.
+*   SD_USER_ROLE_GET (1 view)
+    IF p_urole = abap_true.
+      PERFORM measure USING '/SAVY/I_USER_ROLE_GET' 'SD_USER_ROLE_GET' lv_tier lv_label.
     ENDIF.
 
-*   SD_USER_DETAILS (1 view)
-    IF p_user = abap_true.
-      PERFORM measure USING '/SAVY/I_USER_DETAILS' 'SD_USER_DETAILS' lv_tier lv_label.
+*   SD_ROLE_GET (3 views)
+    IF p_rget = abap_true.
+      PERFORM measure USING '/SAVY/I_ROLE_GET'   'SD_ROLE_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_ROLE_TCODE' 'SD_ROLE_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_ROLE_TEXT'   'SD_ROLE_GET' lv_tier lv_label.
     ENDIF.
 
-*   SD_AUTHORIZATION_META (3 views)
-    IF p_auth = abap_true.
-      PERFORM measure USING '/SAVY/I_AUTHORIZATION_META'    'SD_AUTHORIZATION_META' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_APPLAUTH_MAINT_STATUS' 'SD_AUTHORIZATION_META' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_APPLAUTH_DEFAULT_VALS' 'SD_AUTHORIZATION_META' lv_tier lv_label.
-    ENDIF.
-
-*   SD_CHANGE_LOG (3 views)
-    IF p_chg = abap_true.
-      PERFORM measure USING '/SAVY/I_CHANGE_HEADER' 'SD_CHANGE_LOG' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_CHANGE_ITEMS'  'SD_CHANGE_LOG' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_CHGOBJ_TXT'    'SD_CHANGE_LOG' lv_tier lv_label.
-    ENDIF.
-
-*   SD_TCODE_METADATA (4 views)
-    IF p_tcode = abap_true.
-      PERFORM measure USING '/SAVY/I_TSTC_META'       'SD_TCODE_METADATA' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_TSTC_AUTHOBJ'    'SD_TCODE_METADATA' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_TSTC_AUTHSTATUS' 'SD_TCODE_METADATA' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_TSTC_DESCR'      'SD_TCODE_METADATA' lv_tier lv_label.
-    ENDIF.
-
-*   SD_WORKLOAD_USAGE (3 views)
-    IF p_wl = abap_true.
-      PERFORM measure USING '/SAVY/I_WORKLOAD_AGGREGATES' 'SD_WORKLOAD_USAGE' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_WL_STATISTICS'       'SD_WORKLOAD_USAGE' lv_tier lv_label.
-      PERFORM measure USING '/SAVY/I_EVENTLOG_TEXT'        'SD_WORKLOAD_USAGE' lv_tier lv_label.
-    ENDIF.
-
-*   SD_SECURITY_LOG (1 view)
-    IF p_sec = abap_true.
-      PERFORM measure USING '/SAVY/I_SM20_LOG' 'SD_SECURITY_LOG' lv_tier lv_label.
-    ENDIF.
-
-*   SD_TABLE_CHANGE_LOG (1 view)
-    IF p_tbl = abap_true.
-      PERFORM measure USING '/SAVY/I_TABLE_CHANGE_LOG' 'SD_TABLE_CHANGE_LOG' lv_tier lv_label.
+*   SD_PROFILES_GET (3 views)
+    IF p_pget = abap_true.
+      PERFORM measure USING '/SAVY/I_PROFILES_GET'  'SD_PROFILES_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_PROFILE_TCODE' 'SD_PROFILES_GET' lv_tier lv_label.
+      PERFORM measure USING '/SAVY/I_PROFILE_TEXT'   'SD_PROFILES_GET' lv_tier lv_label.
     ENDIF.
 
   ENDLOOP.
@@ -213,44 +168,30 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM run_role_scale_test.
 
-  DATA: lt_entries TYPE TABLE OF i,
-        lv_entries TYPE i,
-        lv_rows   TYPE i,
-        lv_label  TYPE string.
+  DATA: lt_roles TYPE TABLE OF i,
+        lv_roles TYPE i,
+        lv_rows  TYPE i,
+        lv_label TYPE string.
 
-  IF p_r1 > 0. APPEND p_r1 TO lt_entries. ENDIF.
-  IF p_r2 > 0. APPEND p_r2 TO lt_entries. ENDIF.
-  IF p_r3 > 0. APPEND p_r3 TO lt_entries. ENDIF.
-  IF p_r4 > 0. APPEND p_r4 TO lt_entries. ENDIF.
-  IF p_r5 > 0. APPEND p_r5 TO lt_entries. ENDIF.
-  IF p_r6 > 0. APPEND p_r6 TO lt_entries. ENDIF.
+  IF p_r1 > 0. APPEND p_r1 TO lt_roles. ENDIF.
+  IF p_r2 > 0. APPEND p_r2 TO lt_roles. ENDIF.
+  IF p_r3 > 0. APPEND p_r3 TO lt_roles. ENDIF.
+  IF p_r4 > 0. APPEND p_r4 TO lt_roles. ENDIF.
+  IF p_r5 > 0. APPEND p_r5 TO lt_roles. ENDIF.
+  IF p_r6 > 0. APPEND p_r6 TO lt_roles. ENDIF.
 
-  LOOP AT lt_entries INTO lv_entries.
-    lv_rows  = p_busers * lv_entries.
-    lv_label = |{ lv_entries } Entries x { p_busers } Roles|.
+  LOOP AT lt_roles INTO lv_roles.
+    lv_rows  = p_busers * lv_roles.
+    lv_label = |{ lv_roles } Roles x { p_busers } Users|.
 
     SKIP.
     WRITE: / '--- Tier:', lv_label, '(', lv_rows, 'expected rows ) ---'.
 
-*   Role user assignments (scale with users per role)
-    PERFORM measure USING '/SAVY/I_ROLE_USERS'    'SD_ROLE_EXTRACTION'    lv_rows lv_label.
-    PERFORM measure USING '/SAVY/I_ROLE_USERS_V4' 'SD_ROLE_EXTRACTION_V4' lv_rows lv_label.
-
-*   Role auth objects (scale with auth complexity per role)
-    PERFORM measure USING '/SAVY/I_ROLE_AUTHDATA'    'SD_ROLE_EXTRACTION'    lv_rows lv_label.
-    PERFORM measure USING '/SAVY/I_ROLE_AUTHDATA_V4' 'SD_ROLE_EXTRACTION_V4' lv_rows lv_label.
-
-*   Role services/Fiori (scale with menu entries per role)
-    PERFORM measure USING '/SAVY/I_ROLE_SERVICE'    'SD_ROLE_EXTRACTION'    lv_rows lv_label.
-    PERFORM measure USING '/SAVY/I_ROLE_SERVICE_V4' 'SD_ROLE_EXTRACTION_V4' lv_rows lv_label.
-
-*   Role menu/hierarchy (scale with menu structure)
-    PERFORM measure USING '/SAVY/I_ROLE_HIERARCHY' 'SD_ROLE_EXTRACTION' lv_rows lv_label.
-    PERFORM measure USING '/SAVY/I_ROLE_MENUDATA'  'SD_ROLE_EXTRACTION' lv_rows lv_label.
-    PERFORM measure USING '/SAVY/I_ROLE_TRANS_V4'  'SD_ROLE_EXTRACTION_V4' lv_rows lv_label.
-
-*   Role profiles (scale with profile assignments)
-    PERFORM measure USING '/SAVY/I_ROLE_PROFILE' 'SD_ROLE_EXTRACTION' lv_rows lv_label.
+    PERFORM measure USING '/SAVY/I_USER_ACTROLES'      'SD_USER_GET'       lv_rows lv_label.
+    PERFORM measure USING '/SAVY/I_USER_ROLE_GET'       'SD_USER_ROLE_GET'  lv_rows lv_label.
+    PERFORM measure USING '/SAVY/I_USER_ROLES_DELTA'    'SD_USER_GET_DELTA' lv_rows lv_label.
+    PERFORM measure USING '/SAVY/I_USER_PROFILES'       'SD_USER_GET'       lv_rows lv_label.
+    PERFORM measure USING '/SAVY/I_USER_PROFILES_DELTA' 'SD_USER_GET_DELTA' lv_rows lv_label.
 
   ENDLOOP.
 
@@ -289,7 +230,6 @@ FORM measure USING pv_view    TYPE string
   lv_max_rows = pv_rows.
 
   TRY.
-
 *     Memory before
       cl_abap_memory_utilities=>get_total_used_size(
         IMPORTING size = lv_mem_before ).
@@ -384,9 +324,9 @@ FORM display_alv.
       lo_display = lo_alv->get_display_settings( ).
       lo_display->set_striped_pattern( abap_true ).
       IF p_mode_a = abap_true.
-        lo_display->set_list_header( 'AUTH Scalability - Mode A: Volume Scaling' ).
+        lo_display->set_list_header( 'AM Scalability - Mode A: Volume by User Count' ).
       ELSE.
-        lo_display->set_list_header( |AUTH Scalability - Mode B: Role Complexity ({ p_busers } Roles)| ).
+        lo_display->set_list_header( |AM Scalability - Mode B: Role Density ({ p_busers } Users)| ).
       ENDIF.
 
       lo_columns = lo_alv->get_columns( ).
